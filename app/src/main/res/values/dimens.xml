@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="artwork_size">54dp</dimen>
+    <dimen name="artwork_round">10%</dimen>
+    <dimen name="main_txt_size">16sp</dimen>
+
+    <dimen name="toolbar_height">60dp</dimen>
+</resources>
