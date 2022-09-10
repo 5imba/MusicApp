@@ -27,13 +27,29 @@
 
     <style name="TextAppearance.MainText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/black</item>
-        <item name="fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+    </style>
+
+    <style name="TextAppearance.SongTitle" parent="TextAppearance.MainText">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/song_title_size</item>
+    </style>
+
+    <style name="TextAppearance.SongDescription" parent="TextAppearance.MainText">
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:textSize">@dimen/song_description_size</item>
+    </style>
+
+    <style name="TextAppearance.TabText" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_light</item>
     </style>
 
     <style name="ImageButton.Main" parent="Widget.AppCompat.ImageButton">
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
-        <item name="tint">@color/black</item>
+        <item name="tint">@color/dark_gray</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
+
 
 </resources>

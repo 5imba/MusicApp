@@ -22,4 +22,11 @@
     <string name="tracks">Tracks</string>
     <string name="albums">Albums</string>
     <string name="artists">Artists</string>
+    <string name="queue">Queue</string>
+
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="collapse_player">Collapse player</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="repeat_mode">Repeat Mode</string>
 </resources>

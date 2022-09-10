@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 import com.bogleo.musicapp.R
-import com.bogleo.musicapp.adaptors.recycler.other.BaseViewHolder
-import com.bogleo.musicapp.adaptors.recycler.other.SongDiffUtil
+import com.bogleo.musicapp.adaptors.recycler.managers.BaseViewHolder
+import com.bogleo.musicapp.adaptors.recycler.managers.SongDiffUtil
 import com.bogleo.musicapp.adaptors.recycler.viewholders.SongViewHolder
 import com.bogleo.musicapp.data.model.Song
 import com.bogleo.musicapp.databinding.ItemSongBinding

@@ -9,7 +9,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import com.bogleo.musicapp.R
 import com.bogleo.musicapp.common.NOTIFICATION_CHANNEL_ID
 import com.bogleo.musicapp.common.NOTIFICATION_ID
-import com.bogleo.musicapp.common.getBitmap
+import com.bogleo.musicapp.common.utils.getBitmap
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 

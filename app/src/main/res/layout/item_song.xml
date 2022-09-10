@@ -5,15 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:orientation="horizontal">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_album_cover"
         android:layout_width="@dimen/artwork_size"
         android:layout_height="@dimen/artwork_size"
+        android:layout_margin="10dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/album_cover"
+        android:elevation="5dp"
         app:shapeAppearance="@style/ShapeAlbumArtList"
         app:srcCompat="@drawable/ic_default_album_cover"
         tools:ignore="ImageContrastCheck" />
@@ -21,27 +22,28 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/txt_title"
-            style="@style/TextAppearance.MainText"
+            style="@style/TextAppearance.SongTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:hint="@string/title"
-            android:textSize="18sp"
+            android:singleLine="true"
             tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/txt_artist"
-            style="@style/TextAppearance.MainText"
+            style="@style/TextAppearance.SongDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:hint="@string/artist"
-            android:textSize="16sp"
+            android:singleLine="true"
             tools:ignore="TextContrastCheck" />
     </LinearLayout>
 
@@ -50,6 +52,7 @@
         style="@style/ImageButton.Main"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_marginEnd="10dp"
         android:contentDescription="@string/more"
         android:padding="5dp"
         app:srcCompat="@drawable/ic_more"

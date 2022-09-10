@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bogleo.musicapp.R
-import com.bogleo.musicapp.adaptors.recycler.other.BaseViewHolder
+import com.bogleo.musicapp.adaptors.recycler.managers.BaseViewHolder
 import com.bogleo.musicapp.adaptors.recycler.viewholders.TabSliderViewHolder
 import com.bogleo.musicapp.databinding.ItemTabBinding
 import java.lang.IllegalArgumentException

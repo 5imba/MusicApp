@@ -10,8 +10,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.app.ActivityCompat
 import com.bogleo.musicapp.R
-import com.bogleo.musicapp.common.getBitmap
-import com.bogleo.musicapp.common.sdk29AndUp
+import com.bogleo.musicapp.common.utils.sdk29AndUp
 import com.bogleo.musicapp.data.model.Song
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

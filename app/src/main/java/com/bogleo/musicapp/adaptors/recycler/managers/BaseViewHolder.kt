@@ -1,4 +1,4 @@
-package com.bogleo.musicapp.adaptors.recycler.other
+package com.bogleo.musicapp.adaptors.recycler.managers
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding

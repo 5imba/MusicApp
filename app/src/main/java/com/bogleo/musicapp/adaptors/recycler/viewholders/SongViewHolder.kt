@@ -1,6 +1,6 @@
 package com.bogleo.musicapp.adaptors.recycler.viewholders
 
-import com.bogleo.musicapp.adaptors.recycler.other.BaseViewHolder
+import com.bogleo.musicapp.adaptors.recycler.managers.BaseViewHolder
 import com.bogleo.musicapp.data.model.Song
 import com.bogleo.musicapp.databinding.ItemSongBinding
 
