@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <ImageView
         android:id="@+id/img_album_cover"
         android:layout_width="@dimen/artwork_size"
         android:layout_height="@dimen/artwork_size"
@@ -15,7 +16,6 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/album_cover"
         android:elevation="5dp"
-        app:shapeAppearance="@style/ShapeAlbumArtList"
         app:srcCompat="@drawable/ic_default_album_cover"
         tools:ignore="ImageContrastCheck" />
 

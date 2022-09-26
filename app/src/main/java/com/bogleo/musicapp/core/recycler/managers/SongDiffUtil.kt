@@ -1,4 +1,4 @@
-package com.bogleo.musicapp.adaptors.recycler.managers
+package com.bogleo.musicapp.core.recycler.managers
 
 import androidx.recyclerview.widget.DiffUtil
 import com.bogleo.musicapp.data.model.Song

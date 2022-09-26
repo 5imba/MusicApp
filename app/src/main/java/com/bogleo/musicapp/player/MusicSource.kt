@@ -7,11 +7,15 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.MediaMetadataCompat.*
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
+import com.bogleo.musicapp.common.extensions.toMediaMetadata
 import com.bogleo.musicapp.data.MediaDatabase
+import com.bogleo.musicapp.data.model.Song
 import javax.inject.Inject
 import com.bogleo.musicapp.player.MusicSourceState.*
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.MediaMetadata
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
+import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import kotlinx.coroutines.Dispatchers
@@ -49,32 +53,19 @@ class MusicSource @Inject constructor(
     suspend fun fetchMediaData() = withContext(Dispatchers.IO) {
         state = InitializingState
         val songList = mediaDatabase.loadMusic()
-        songs = songList.map { song ->
-            MediaMetadataCompat.Builder()
-                .putString(METADATA_KEY_MEDIA_URI, song.uri.toString())
-                .putString(METADATA_KEY_ALBUM_ART_URI, song.artworkUri.toString())
-                .putString(METADATA_KEY_DISPLAY_ICON_URI, song.artworkUri.toString())
-                .putString(METADATA_KEY_MEDIA_ID, song.id)
-                .putString(METADATA_KEY_TITLE, song.title)
-                .putString(METADATA_KEY_DISPLAY_TITLE, song.title)
-                .putString(METADATA_KEY_ARTIST, song.artist)
-                .putString(METADATA_KEY_DISPLAY_SUBTITLE, song.artist)
-                .putString(METADATA_KEY_DISPLAY_DESCRIPTION, song.artist)
-                .putString(METADATA_KEY_ALBUM, song.album)
-                .putLong(METADATA_KEY_DURATION, song.duration)
-                .putString(METADATA_KEY_DATE, song.dateAdded)
-                .build()
+        songs = songList.map { song: Song ->
+            song.toMediaMetadata()
         }
         state = InitializedState
     }
 
     fun asMediaSource(dataSourceFactory: DataSource.Factory): ConcatenatingMediaSource {
         val concatenatingMediaSource = ConcatenatingMediaSource()
-        songs.forEach { song ->
+        songs.forEach { song: MediaMetadataCompat ->
             val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(
                     MediaItem.fromUri(
-                        song.getString(METADATA_KEY_MEDIA_URI).toUri()
+                        song.getString(METADATA_KEY_MEDIA_URI)
                     )
                 )
             concatenatingMediaSource.addMediaSource(mediaSource)
@@ -82,7 +73,7 @@ class MusicSource @Inject constructor(
         return concatenatingMediaSource
     }
 
-    fun asMediaItems() = songs.map { song ->
+    fun asMediaItems() = songs.map { song: MediaMetadataCompat ->
         val descriptionCompat = MediaDescriptionCompat.Builder()
             .setMediaUri(song.description.mediaUri)
             .setIconUri(song.description.iconUri)

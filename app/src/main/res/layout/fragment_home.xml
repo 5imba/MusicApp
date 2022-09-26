@@ -20,13 +20,32 @@
             app:cardElevation="5dp"
             app:cardMaxElevation="5dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_tab_slider"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:clipToPadding="false" />
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_tab_slider"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:clipToPadding="false">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageButton
+                    android:id="@+id/img_btn_settings"
+                    style="@style/ImageButton.Main"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/settings"
+                    android:src="@drawable/ic_more"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.viewpager2.widget.ViewPager2
@@ -40,22 +59,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
+        <FrameLayout
             android:id="@+id/bottom_sheet_player"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:elevation="10dp"
+            android:outlineProvider="bounds"
             app:behavior_hideable="false"
             app:behavior_peekHeight="@dimen/toolbar_height"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="10dp"
-            app:cardMaxElevation="10dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
             <include
                 android:id="@+id/player"
                 layout="@layout/layout_player" />
 
-        </androidx.cardview.widget.CardView>
+        </FrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

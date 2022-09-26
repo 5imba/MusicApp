@@ -30,7 +30,7 @@ class MediaDatabase(
 
             while (!isPermissionGranted) {
                 checkPermission()
-                delay(100)
+                delay(500)
                 yield()
             }
 

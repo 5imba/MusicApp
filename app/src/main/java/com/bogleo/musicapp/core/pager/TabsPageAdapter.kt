@@ -1,4 +1,4 @@
-package com.bogleo.musicapp.adaptors.pager
+package com.bogleo.musicapp.core.pager
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

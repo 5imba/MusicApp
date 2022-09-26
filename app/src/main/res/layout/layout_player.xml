@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageButton
             android:id="@+id/img_btn_collapse"
@@ -75,7 +76,6 @@
                 android:hint="@string/artist"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
-                android:text="A very long text that will be reaching out the screen or view container"
                 android:textSize="14sp"
                 tools:ignore="TextContrastCheck" />
 
@@ -84,27 +84,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp">
-
+                android:layout_marginHorizontal="15dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/txt_position"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"
                     android:gravity="start"
-                    android:text="1:30" />
+                    android:textAlignment="textStart" />
 
                 <TextView
                     android:id="@+id/txt_duration"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="4:20" />
-            </RelativeLayout>
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,7 +140,6 @@
                     android:layout_weight="0.9"
                     android:contentDescription="@string/play"
                     android:padding="10dp"
-                    android:visibility="gone"
                     app:srcCompat="@drawable/ic_play" />
 
                 <ImageButton
@@ -151,6 +150,7 @@
                     android:layout_weight="0.9"
                     android:contentDescription="@string/pause"
                     android:padding="10dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/ic_pause" />
 
                 <ImageButton
@@ -188,9 +188,9 @@
 
         <ImageView
             android:id="@+id/img_player_album_cover_small"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
+            android:layout_width="@dimen/player_small_btn_size"
+            android:layout_height="@dimen/player_small_btn_size"
+            android:layout_margin="@dimen/player_small_btn_padding"
             android:contentDescription="@string/album_cover"
             app:srcCompat="@drawable/ic_default_album_cover"
             tools:ignore="ImageContrastCheck" />
@@ -215,7 +215,6 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="A very long text that will be reaching out the screen or view container"
                 android:textSize="16sp"
                 tools:ignore="TextContrastCheck" />
 
@@ -232,7 +231,6 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="A very long text that will be reaching out the screen or view container"
                 android:textSize="12sp"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>
@@ -240,51 +238,52 @@
         <ImageButton
             android:id="@+id/img_btn_prev_small"
             style="@style/ImageButton.Main"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/player_small_btn_size"
+            android:layout_height="@dimen/player_small_btn_size"
             android:contentDescription="@string/previous"
-            android:padding="10dp"
+            android:padding="@dimen/player_small_btn_padding"
             app:srcCompat="@drawable/ic_previous"
             tools:ignore="TouchTargetSizeCheck" />
 
         <ImageButton
             android:id="@+id/img_btn_play_small"
             style="@style/ImageButton.Main"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="10dp"
-            android:visibility="gone"
+            android:layout_width="@dimen/player_small_btn_size"
+            android:layout_height="@dimen/player_small_btn_size"
+            android:contentDescription="@string/play"
+            android:padding="@dimen/player_small_btn_padding"
             app:srcCompat="@drawable/ic_play"
-            android:contentDescription="@string/play" />
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageButton
             android:id="@+id/img_btn_pause_small"
             style="@style/ImageButton.Main"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/player_small_btn_size"
+            android:layout_height="@dimen/player_small_btn_size"
             android:contentDescription="@string/pause"
-            android:padding="10dp"
+            android:padding="@dimen/player_small_btn_padding"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_pause"
             tools:ignore="TouchTargetSizeCheck" />
 
         <ImageButton
             android:id="@+id/img_btn_next_small"
             style="@style/ImageButton.Main"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/player_small_btn_size"
+            android:layout_height="@dimen/player_small_btn_size"
             android:contentDescription="@string/next"
-            android:padding="10dp"
+            android:padding="@dimen/player_small_btn_padding"
             app:srcCompat="@drawable/ic_next"
             tools:ignore="TouchTargetSizeCheck" />
 
         <ImageButton
             android:id="@+id/img_btn_queue_small"
             style="@style/ImageButton.Main"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/player_small_btn_size"
+            android:layout_height="@dimen/player_small_btn_size"
             android:contentDescription="@string/queue"
-            android:padding="10dp"
-            app:srcCompat="@drawable/ic_music_filter"
+            android:padding="@dimen/player_small_btn_padding"
+            app:srcCompat="@drawable/ic_music_queue"
             tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>

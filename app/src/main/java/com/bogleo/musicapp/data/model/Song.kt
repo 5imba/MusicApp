@@ -1,6 +1,5 @@
 package com.bogleo.musicapp.data.model
 
-import android.graphics.Bitmap
 import android.net.Uri
 
 data class Song(
@@ -12,4 +11,4 @@ data class Song(
     val album: String,
     val duration: Long,
     val dateAdded: String
-)
+) : Item

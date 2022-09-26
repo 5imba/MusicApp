@@ -1,6 +1,6 @@
-package com.bogleo.musicapp.adaptors.recycler.viewholders
+package com.bogleo.musicapp.core.recycler.viewholders
 
-import com.bogleo.musicapp.adaptors.recycler.managers.BaseViewHolder
+import com.bogleo.musicapp.core.recycler.managers.BaseViewHolder
 import com.bogleo.musicapp.databinding.ItemTabBinding
 
 class TabSliderViewHolder(

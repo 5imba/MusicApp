@@ -14,6 +14,8 @@ import com.bogleo.musicapp.common.Event
 import com.bogleo.musicapp.common.PERMISSION_ERROR
 import com.bogleo.musicapp.common.Resource
 
+private const val TAG = "MusicServiceConnection"
+
 class MusicServiceConnection(
     context: Context
 ) {
@@ -42,7 +44,7 @@ class MusicServiceConnection(
         mediaBrowserConnectionCallback,
         null
     ).apply {
-        Log.e("MusicServiceConnection", "connect")
+        Log.i(TAG, "Start media browser connection")
         connect()
     }
 
@@ -55,6 +57,10 @@ class MusicServiceConnection(
 
     fun unsubscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
         mediaBrowser.unsubscribe(parentId, callback)
+    }
+
+    fun sendCommand() {
+
     }
 
     private inner class MediaBrowserConnectionCallback(

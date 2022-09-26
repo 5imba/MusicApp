@@ -177,8 +177,31 @@ class MusicService : MediaBrowserServiceCompat() {
     }
 
     private inner class MusicQueueNavigator : TimelineQueueNavigator(mediaSession) {
+
+        // TODO setup queue
+        private val mainQueue: MutableList<Int> = mutableListOf()
+        private val nearestQueue: MutableList<Int> = mutableListOf()
+
+
         override fun getMediaDescription(player: Player, windowIndex: Int): MediaDescriptionCompat {
-            return musicSource.songs[windowIndex].description
+            Log.e("MusicQueueNavigator", "windowIndex: $windowIndex")
+            return if (windowIndex < musicSource.songs.size) {
+                musicSource.songs[windowIndex].description
+            } else
+                musicSource.songs.last().description
+        }
+
+        fun addToMainQueue(indexQueue: List<Int>) {
+            mainQueue.addAll(indexQueue)
+        }
+
+        fun addToNearestQueue(index: Int) {
+            with(nearestQueue) {
+                if(contains(index)) {
+                    removeAt(indexOf(index))
+                }
+                add(index)
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.bogleo.musicapp.adaptors.recycler
+package com.bogleo.musicapp.core.recycler
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bogleo.musicapp.R
-import com.bogleo.musicapp.adaptors.recycler.managers.BaseViewHolder
-import com.bogleo.musicapp.adaptors.recycler.viewholders.TabSliderViewHolder
+import com.bogleo.musicapp.core.recycler.managers.BaseViewHolder
+import com.bogleo.musicapp.core.recycler.viewholders.TabSliderViewHolder
 import com.bogleo.musicapp.databinding.ItemTabBinding
 import java.lang.IllegalArgumentException
 import javax.inject.Inject

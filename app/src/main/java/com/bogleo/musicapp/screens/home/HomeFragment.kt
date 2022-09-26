@@ -1,25 +1,29 @@
 package com.bogleo.musicapp.screens.home
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
+import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.marginBottom
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.bogleo.musicapp.R
-import com.bogleo.musicapp.adaptors.pager.TabsPageAdapter
-import com.bogleo.musicapp.adaptors.recycler.TabSliderAdapter
-import com.bogleo.musicapp.adaptors.recycler.managers.TabSliderLayoutManager
+import com.bogleo.musicapp.core.pager.TabsPageAdapter
+import com.bogleo.musicapp.core.recycler.TabSliderAdapter
+import com.bogleo.musicapp.core.recycler.managers.TabSliderLayoutManager
 import com.bogleo.musicapp.common.extensions.*
 import com.bogleo.musicapp.common.utils.ScreenUtils
+import com.bogleo.musicapp.data.model.Song
 import com.bogleo.musicapp.databinding.FragmentHomeBinding
+import com.bogleo.musicapp.player.isPlayEnabled
+import com.bogleo.musicapp.player.isPlaying
 import com.bogleo.musicapp.screens.viewmodels.MainViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -50,20 +54,18 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Get screen center for Sliding Tabs centering
-        val screenCenter = ScreenUtils.getScreenWidth(requireContext()) / 2
-        // Create tabs list, also set at [TabsPageAdapter]
-        val tabs = listOf(
-            resources.getString(R.string.favorites),
-            resources.getString(R.string.playlists),
-            resources.getString(R.string.tracks),
-            resources.getString(R.string.albums),
-            resources.getString(R.string.artists)
-        )
 
         with(binding) {
             // Configure Sliding Tabs
             with(recyclerTabSlider) {
+                // Create tabs list, also set at [TabsPageAdapter]
+                val tabs = listOf(
+                    resources.getString(R.string.favorites),
+                    resources.getString(R.string.playlists),
+                    resources.getString(R.string.tracks),
+                    resources.getString(R.string.albums),
+                    resources.getString(R.string.artists)
+                )
                 adapter = tabSliderAdapter.apply {
                     setData(tabs)
                     setOnClickListener { position: Int ->
@@ -73,6 +75,8 @@ class HomeFragment : Fragment() {
                 layoutManager = tabSliderLayoutManager.apply {
                     onItemSelectCallback = ::onTabSelectCallback
                 }
+                // Get screen center for Sliding Tabs scroll space
+                val screenCenter = ScreenUtils.getScreenWidth(requireContext()) / 2
                 setPadding(screenCenter, 0, screenCenter, 0)
             }
 
@@ -80,6 +84,7 @@ class HomeFragment : Fragment() {
             with(viewPagerContent) {
                 adapter = TabsPageAdapter(this@HomeFragment)
                 registerOnPageChangeCallback(onPageChangeCallback)
+                isUserInputEnabled = false
             }
 
             // Scroll to Tracks tab
@@ -92,13 +97,39 @@ class HomeFragment : Fragment() {
             bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetPlayer)
             bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
             bottomSheetPlayer.setOnClickListener { expandPlayer() }
-            player.imgBtnCollapse.setOnClickListener { collapsePlayer() }
 
-            // Start song title marquee
-            player.txtPlayerTitleSmall.isSelected = true
-            player.txtPlayerArtistSmall.isSelected = true
-            player.txtPlayerTitleBig.isSelected = true
-            player.txtPlayerArtistBig.isSelected = true
+            with(player) {
+                // Start song title marquee
+                txtPlayerTitleSmall.isSelected = true
+                txtPlayerArtistSmall.isSelected = true
+                txtPlayerTitleBig.isSelected = true
+                txtPlayerArtistBig.isSelected = true
+
+                // Bind onClick listeners
+                imgBtnCollapse.setOnClickListener { collapsePlayer() }
+                imgBtnPlaySmall.setOnClickListener { mainViewModel.playSong() }
+                imgBtnPlayBig.setOnClickListener { mainViewModel.playSong() }
+                imgBtnPauseSmall.setOnClickListener { mainViewModel.pauseSong() }
+                imgBtnPauseBig.setOnClickListener { mainViewModel.pauseSong() }
+                imgBtnNextSmall.setOnClickListener { mainViewModel.skipToNextSong() }
+                imgBtnNextBig.setOnClickListener { mainViewModel.skipToNextSong() }
+                imgBtnPrevSmall.setOnClickListener { mainViewModel.skipToPreviousSong() }
+                imgBtnPrevBig.setOnClickListener { mainViewModel.skipToPreviousSong() }
+            }
+
+            mainViewModel.playbackState.observe(viewLifecycleOwner) { state: PlaybackStateCompat? ->
+                state?.let { playbackState: PlaybackStateCompat ->
+                    switchPlayPause(isPlaying = playbackState.isPlaying)
+                }
+            }
+
+            mainViewModel.currentlyPlayingSong.observe(viewLifecycleOwner) { mediaItem: MediaMetadataCompat? ->
+                mediaItem?.let {
+                    it.toSong()?.let { song: Song ->
+                        setPlayerData(song = song)
+                    }
+                }
+            }
         }
     }
 
@@ -163,7 +194,7 @@ class HomeFragment : Fragment() {
                     playerContainerBig.visibility = View.VISIBLE
                 }
                 BottomSheetBehavior.STATE_HIDDEN -> {
-
+                    binding.contentContainer.setMargins(bottom = 0)
                 }
             }
         }
@@ -182,27 +213,55 @@ class HomeFragment : Fragment() {
             // Album cover slide animation
             imgPlayerAlbumCoverTransit.apply {
                 visibility = View.VISIBLE
-                lerpWidth(
-                    imgPlayerAlbumCoverSmall.width,
-                    imgPlayerAlbumCoverBig.width,
-                    slideOffset
-                )
-                lerpHeight(
-                    imgPlayerAlbumCoverSmall.height,
-                    imgPlayerAlbumCoverBig.height,
-                    slideOffset
-                )
-                lerpX(
-                    imgPlayerAlbumCoverSmall.x,
-                    imgPlayerAlbumCoverBig.x,
-                    slideOffset
-                )
-                lerpY(
-                    imgPlayerAlbumCoverSmall.y,
-                    imgPlayerAlbumCoverBig.y,
-                    slideOffset
-                )
+                lerpAnimate(amount = slideOffset)
+                    .lerpWidth(
+                        start = imgPlayerAlbumCoverSmall.width,
+                        stop = imgPlayerAlbumCoverBig.width
+                    )
+                    .lerpHeight(
+                        start = imgPlayerAlbumCoverSmall.height,
+                        stop = imgPlayerAlbumCoverBig.height
+                    )
+                    .lerpX(
+                        start = imgPlayerAlbumCoverSmall.x,
+                        stop = imgPlayerAlbumCoverBig.x
+                    )
+                    .lerpY(
+                        start = imgPlayerAlbumCoverSmall.y,
+                        stop = imgPlayerAlbumCoverBig.y
+                    )
+                    .apply()
             }
+        }
+    }
+
+    private fun switchPlayPause(isPlaying: Boolean) {
+        val playVisibility: Int
+        val pauseVisibility: Int
+        if(isPlaying) {
+            playVisibility = View.GONE
+            pauseVisibility = View.VISIBLE
+        } else {
+            playVisibility = View.VISIBLE
+            pauseVisibility = View.GONE
+        }
+        with(binding.player) {
+            imgBtnPlaySmall.visibility = playVisibility
+            imgBtnPlayBig.visibility = playVisibility
+            imgBtnPauseSmall.visibility = pauseVisibility
+            imgBtnPauseBig.visibility = pauseVisibility
+        }
+    }
+
+    private fun setPlayerData(song: Song) {
+        with(binding.player) {
+            txtPlayerTitleSmall.text = song.title
+            txtPlayerTitleBig.text = song.title
+            txtPlayerArtistSmall.text = song.artist
+            txtPlayerArtistBig.text = song.artist
+            imgPlayerAlbumCoverSmall.setImageURI(song.artworkUri)
+            imgPlayerAlbumCoverBig.setImageURI(song.artworkUri)
+            imgPlayerAlbumCoverTransit.setImageURI(song.artworkUri)
         }
     }
 }

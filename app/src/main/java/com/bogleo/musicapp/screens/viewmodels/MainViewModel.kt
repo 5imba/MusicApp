@@ -2,6 +2,7 @@ package com.bogleo.musicapp.screens.viewmodels
 
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat.*
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -49,7 +50,7 @@ class MainViewModel @Inject constructor(
         if(isPrepared && mediaItem.id ==
             currentlyPlayingSong.value?.getString(METADATA_KEY_MEDIA_ID)
         ) {
-            playbackState.value?.let { playbackState ->
+            playbackState.value?.let { playbackState: PlaybackStateCompat ->
                 when {
                     playbackState.isPlaying -> {
                         if(toggle) {
@@ -64,10 +65,22 @@ class MainViewModel @Inject constructor(
             }
         } else {
             musicServiceConnection.transportControls.playFromMediaId(
-                mediaItem.id.toString(),
+                mediaItem.id,
                 null
             )
         }
+    }
+
+    fun addToQueue(song: Song) {
+
+    }
+
+    fun playSong() {
+        musicServiceConnection.transportControls.play()
+    }
+
+    fun pauseSong() {
+        musicServiceConnection.transportControls.pause()
     }
 
     override fun onCleared() {

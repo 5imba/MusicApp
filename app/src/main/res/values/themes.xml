@@ -12,6 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="colorHighlighted">@color/black</item>
+        <item name="colorBackground">@color/very_light_gray</item>
     </style>
     <style name="Theme.MusicApp.NoActionBar">
         <item name="windowActionBar">false</item>
